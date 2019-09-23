@@ -54,7 +54,7 @@ class RiskService(object):
                     risk = Risk(risk_date=day,
                                 number_of_cases=vector_count,
                                 lat=cluster.point.y,
-                                long=cluster.point.x,
+                                lon=cluster.point.x,
                                 close_pairs=cluster.close_space_and_time,
                                 close_space=cluster.close_in_space,
                                 close_time=cluster.close_in_time,
@@ -75,7 +75,7 @@ class RiskService(object):
 
         try:
             session.commit()
-        except SQLAlchemyError, e:
+        except SQLAlchemyError as e:
             session.rollback()
             logging.exception("There was a problem committing the risk data session")
             logging.exception(e)
@@ -87,11 +87,11 @@ class RiskService(object):
         try:
             session.add(risk)
             session.commit()
-        except IntegrityError, e:
+        except IntegrityError as e:
             logging.warning("Risk already exists in database for this date '%s' and location '%s - %s', skipping...",
                             risk.risk_date, risk.lat, risk.long)
             session.rollback()
-        except SQLAlchemyError, e:
+        except SQLAlchemyError as e:
             logging.exception("There was a problem inserting risk")
             logging.exception(e)
             session.rollback()

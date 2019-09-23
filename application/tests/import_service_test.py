@@ -40,7 +40,7 @@ class TestImportServiceFunctions(unittest.TestCase):
         query = session.query(Case).filter(Case.id == '99999')
         count = database_service.get_count_for_query(query)
 
-        self.assertEquals(count, 1)
+        self.assertEqual(count, 1)
         session.delete(query.first())
         session.commit()
 

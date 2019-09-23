@@ -123,7 +123,7 @@ def run_migrations(revision='head'):
     alembic_config = Config(alembic_config_path)
     try:
         command.upgrade(config=alembic_config, revision=revision)
-    except CommandError, ex:
+    except CommandError as ex:
         logging.error("Could not run migrations: [{0}]".format(ex))
 
 

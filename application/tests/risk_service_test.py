@@ -98,7 +98,7 @@ class TestRiskServiceFunctions(unittest.TestCase):
         risk = Risk(risk_date=datetime.date(int(2016), int(3), int(25)),
                     number_of_cases=5,
                     lat=point.x,
-                    long=point.y,
+                    lon=point.y,
                     close_pairs=3,
                     close_space=2,
                     close_time=1,
@@ -135,7 +135,7 @@ class TestRiskServiceFunctions(unittest.TestCase):
                                                                                      point)
 
         count = comparative_test_service.get_close_space_and_time(cases_in_cluster_query)
-        self.assertEquals(count, 1)
+        self.assertEqual(count, 1)
 
     def test_get_close_space_only(self):
 
@@ -164,7 +164,7 @@ class TestRiskServiceFunctions(unittest.TestCase):
 
             for cluster in clusters_per_point:
                 if cluster.point.equals(geography_service.get_shape_from_sqlalch_element(point)):
-                    self.assertEquals(cluster.close_in_space, count_old)
+                    self.assertEqual(cluster.close_in_space, count_old)
 
     def test_get_close_space_only_old(self):
 
@@ -212,7 +212,7 @@ class TestRiskServiceFunctions(unittest.TestCase):
 
             for cluster in clusters_per_point:
                 if cluster.point.equals(geography_service.get_shape_from_sqlalch_element(point)):
-                    self.assertEquals(cluster.close_in_time, count_old)
+                    self.assertEqual(cluster.close_in_time, count_old)
 
     def test_close_time_only_old(self):
 

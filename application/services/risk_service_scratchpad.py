@@ -59,7 +59,7 @@ class RiskService(object):
                         risk = Risk(risk_date=day,
                                     number_of_cases=vector_count,
                                     lat=point.x,
-                                    long=point.y)
+                                    lon=point.y)
 
 
                 for point in gridpoints:
@@ -70,7 +70,7 @@ class RiskService(object):
                         risk = Risk(risk_date=day,
                                     number_of_cases=vector_count,
                                     lat=point.x,
-                                    long=point.y)
+                                    lon=point.y)
 
                         risk.close_pairs = self.get_close_space_and_time(cases_in_cluster_query)
                         risk.close_space = self.get_close_space_only_old(cases_in_cluster_query) - risk.close_pairs
@@ -97,7 +97,7 @@ class RiskService(object):
 
         try:
             session.commit()
-        except SQLAlchemyError, e:
+        except SQLAlchemyError as e:
             session.rollback()
             logging.exception("There was a problem committing the risk data session")
             logging.exception(e)
@@ -110,11 +110,11 @@ class RiskService(object):
         try:
             session.add(risk)
             session.commit()
-        except IntegrityError, e:
+        except IntegrityError as e:
             logging.warning("Risk already exists in database for this date '%s' and location '%s - %s', skipping...",
                             risk.risk_date, risk.lat, risk.long)
             session.rollback()
-        except SQLAlchemyError, e:
+        except SQLAlchemyError as e:
             logging.exception("There was a problem inserting risk")
             logging.exception(e)
             session.rollback()
@@ -281,9 +281,9 @@ class RiskService(object):
         cluster_per_point = cluster_per_point_query.all()
         for cluster in cluster_per_point:
             for case in cluster.case_array:
-                for case_id, case_location in case.iteritems():
+                for case_id, case_location in case.items():
                     for nearby_case in cluster.case_array:
-                        for nearby_case_id, nearby_case_location in nearby_case.iteritems():
+                        for nearby_case_id, nearby_case_location in nearby_case.items():
                             if (case_id > nearby_case_id):
                                 if geography_service.is_within_distance(case_location,
                                                                         nearby_case_location,
