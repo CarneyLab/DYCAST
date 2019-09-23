@@ -15,7 +15,7 @@ class TestRiskServiceFunctions(unittest.TestCase):
 
     def test_get_clusters_per_point_query(self):
 
-        dycast_parameters = test_helper_functions.get_dycast_parameters(large_dataset=True)
+        dycast_parameters = test_helper_functions.get_dycast_parameters(large_dataset=False)
         risk_service = risk_service_module.RiskService(dycast_parameters)
         comparative_test_service = comparative_test_service_module.ComparativeTestService(dycast_parameters)
 
