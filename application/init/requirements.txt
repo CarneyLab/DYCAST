@@ -1,3 +1,4 @@
+coverage==4.5.4
 psycopg2==2.7.3.2
 # ptvsd = for debugging with Visual Studio Code
 ptvsd==3.2.1

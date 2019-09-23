@@ -303,6 +303,25 @@ run_tests() {
 	fi
 }
 
+run_coverage() {
+	local arguments="$@"
+	echo "Running Coverage using arguments: ${arguments}..."
+	nosetest_command="nosetests -vv --exe --with-coverage --cover-erase --cover-package=application"
+	if [[ -z ${arguments} ]]; then
+		${nosetest_command} tests
+	else
+		${nosetest_command} ${arguments}
+	fi
+
+	exit_code=$?
+	if [[ ! "${exit_code}" == "0" ]]; then
+		echo "Command 'run_coverage' failed, exiting..."
+		exit ${exit_code}
+	else 
+		echo "Finished running the Coverage procedure"
+	fi
+}
+
 ### Starting point ###
 
 
@@ -367,6 +386,10 @@ case ${command} in
 		prepare_launch_test
 		run_tests ${arguments}
 	;;	
+	run_coverage)
+		prepare_launch_test
+		run_coverage ${arguments}
+	;;
 	help|-h|--help)
 		display_help
 	;;
