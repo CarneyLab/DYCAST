@@ -59,7 +59,7 @@ class RiskService(object):
                         risk = Risk(risk_date=day,
                                     number_of_cases=vector_count,
                                     lat=point.x,
-                                    lon=point.y)
+                                    long=point.y)
 
 
                 for point in gridpoints:
@@ -70,7 +70,7 @@ class RiskService(object):
                         risk = Risk(risk_date=day,
                                     number_of_cases=vector_count,
                                     lat=point.x,
-                                    lon=point.y)
+                                    long=point.y)
 
                         risk.close_pairs = self.get_close_space_and_time(cases_in_cluster_query)
                         risk.close_space = self.get_close_space_only_old(cases_in_cluster_query) - risk.close_pairs

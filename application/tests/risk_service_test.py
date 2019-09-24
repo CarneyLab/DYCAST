@@ -98,7 +98,7 @@ class TestRiskServiceFunctions(unittest.TestCase):
         risk = Risk(risk_date=datetime.date(int(2016), int(3), int(25)),
                     number_of_cases=5,
                     lat=point.x,
-                    lon=point.y,
+                    long=point.y,
                     close_pairs=3,
                     close_space=2,
                     close_time=1,

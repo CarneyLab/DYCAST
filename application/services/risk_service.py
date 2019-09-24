@@ -54,7 +54,7 @@ class RiskService(object):
                     risk = Risk(risk_date=day,
                                 number_of_cases=vector_count,
                                 lat=cluster.point.y,
-                                lon=cluster.point.x,
+                                long=cluster.point.x,
                                 close_pairs=cluster.close_space_and_time,
                                 close_space=cluster.close_in_space,
                                 close_time=cluster.close_in_time,
