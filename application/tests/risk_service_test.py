@@ -15,7 +15,7 @@ class TestRiskServiceFunctions(unittest.TestCase):
 
     def test_get_clusters_per_point_query(self):
 
-        dycast_parameters = test_helper_functions.get_dycast_parameters(large_dataset=True)
+        dycast_parameters = test_helper_functions.get_dycast_parameters(large_dataset=False)
         risk_service = risk_service_module.RiskService(dycast_parameters)
         comparative_test_service = comparative_test_service_module.ComparativeTestService(dycast_parameters)
 
@@ -135,7 +135,7 @@ class TestRiskServiceFunctions(unittest.TestCase):
                                                                                      point)
 
         count = comparative_test_service.get_close_space_and_time(cases_in_cluster_query)
-        self.assertEquals(count, 1)
+        self.assertEqual(count, 1)
 
     def test_get_close_space_only(self):
 
@@ -164,7 +164,7 @@ class TestRiskServiceFunctions(unittest.TestCase):
 
             for cluster in clusters_per_point:
                 if cluster.point.equals(geography_service.get_shape_from_sqlalch_element(point)):
-                    self.assertEquals(cluster.close_in_space, count_old)
+                    self.assertEqual(cluster.close_in_space, count_old)
 
     def test_get_close_space_only_old(self):
 
@@ -212,7 +212,7 @@ class TestRiskServiceFunctions(unittest.TestCase):
 
             for cluster in clusters_per_point:
                 if cluster.point.equals(geography_service.get_shape_from_sqlalch_element(point)):
-                    self.assertEquals(cluster.close_in_time, count_old)
+                    self.assertEqual(cluster.close_in_time, count_old)
 
     def test_close_time_only_old(self):
 
@@ -264,7 +264,7 @@ class TestRiskServiceFunctions(unittest.TestCase):
         cluster.close_in_time = 10
 
         nearest_close_in_time_query = risk_service.get_nearest_close_in_time_distribution_margin_query(session, cluster)
-        result = session.query(nearest_close_in_time_query).first()
+        result = session.query(nearest_close_in_time_query).first()[0]
         self.assertIsNotNone(result)
         self.assertGreaterEqual(result, 0)
 

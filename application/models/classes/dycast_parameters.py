@@ -36,7 +36,7 @@ class DycastParameters(object):
         self.extent_max_y = None
         self.srid_of_extent = None
 
-        for (key, value) in kwargs.iteritems():
+        for (key, value) in kwargs.items():
             if hasattr(self, key):
                 setattr(self, key, value)
 

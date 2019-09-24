@@ -1,9 +1,9 @@
 import sys
 import os
-import ConfigParser
+import configparser
 import logging
 
-CONFIG = ConfigParser.SafeConfigParser(os.environ)
+CONFIG = configparser.SafeConfigParser(os.environ)
 
 
 def get_env_variable(var_name):

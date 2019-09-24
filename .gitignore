@@ -8,3 +8,4 @@ application/output/
 .noseids
 .vs/
 venv/
+application/.coverage

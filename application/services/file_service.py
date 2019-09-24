@@ -1,4 +1,4 @@
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import fileinput
 import logging
 import boto3
@@ -87,7 +87,7 @@ def read_file_s3(s3_uri):
 
     try:
         response = s3_client.get_object(Bucket=bucket, Key=key)
-    except botocore.exceptions.ClientError, e:
+    except botocore.exceptions.ClientError as e:
         if e.response['Error']['Code'] == "404":
             logging.exception(
                 "Requested file '%s' in bucket '%s' does not exist", key, bucket)
@@ -102,7 +102,7 @@ def read_file_s3(s3_uri):
 
 def read_file_http(url):
     logging.debug("Reading file from http/https...")
-    response = urllib.urlopen(url)
+    response = urllib.request.urlopen(url)
     if response.code == 200:
         return response.read()
     elif response.code == 404:
@@ -116,7 +116,7 @@ def read_file_local(url):
     logging.debug("Reading local file...")
     try:
         input_file = fileinput.input(url)
-    except IOError, e:
+    except IOError as e:
         logging.exception("Failed to load file: %s", url)
         raise e
     return input_file
@@ -137,7 +137,7 @@ def save_file_to_s3(body, s3_uri):
         response = s3_client.put_object(Body=body, Bucket=bucket, Key=key)
         logging.info("Done saving to AWS S3. Response:")
         logging.info(response)
-    except botocore.exceptions.ClientError, e:
+    except botocore.exceptions.ClientError as e:
         if e.response['Error']['Code'] == "404":
             logging.error(
                 "Requested file '%s' in bucket '%s' does not exist", key, bucket)

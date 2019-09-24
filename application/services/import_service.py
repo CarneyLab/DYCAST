@@ -78,7 +78,7 @@ class ImportService(object):
 
         try:
             session.commit()
-        except SQLAlchemyError, e:
+        except SQLAlchemyError as e:
             session.rollback()
             logging.exception("Couldn't insert cases")
             logging.exception(e)

@@ -22,7 +22,7 @@ def valid_date(date_string):
         return conversion_service.get_date_object_from_string(datetime.date.today())
     try:
         return conversion_service.get_date_object_from_string(date_string)
-    except ValueError, e:
+    except ValueError as e:
         logging.exception("Invalid date format: %s", date_string)
         sys.exit(1)
 
