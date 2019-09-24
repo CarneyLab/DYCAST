@@ -1,5 +1,5 @@
 coverage==4.5.4
-psycopg2==2.7.3.2
+psycopg2-binary==2.8.3
 # ptvsd = for debugging with Visual Studio Code
 ptvsd==3.2.1
 pyproj==1.9.6
