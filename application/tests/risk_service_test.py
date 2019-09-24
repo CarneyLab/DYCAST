@@ -264,7 +264,7 @@ class TestRiskServiceFunctions(unittest.TestCase):
         cluster.close_in_time = 10
 
         nearest_close_in_time_query = risk_service.get_nearest_close_in_time_distribution_margin_query(session, cluster)
-        result = session.query(nearest_close_in_time_query).first()
+        result = session.query(nearest_close_in_time_query).first()[0]
         self.assertIsNotNone(result)
         self.assertGreaterEqual(result, 0)
 
