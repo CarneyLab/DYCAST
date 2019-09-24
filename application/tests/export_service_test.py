@@ -1,5 +1,4 @@
 import unittest
-import psycopg2
 import os
 from application.services import export_service as export_service_module
 from application.services import database_service
