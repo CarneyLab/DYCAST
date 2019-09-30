@@ -1,14 +1,14 @@
 import datetime
 import unittest
 
-from application.models.classes.cluster import Cluster
-from application.models.models import Case, Risk
-from application.services import database_service
-from application.services import geography_service
-from application.services import import_service as import_service_module
-from application.services import risk_service as risk_service_module
-from application.tests import comparative_test_service as comparative_test_service_module
-from application.tests import test_helper_functions
+from models.classes.cluster import Cluster
+from models.models import Case, Risk
+from services import database_service
+from services import geography_service
+from services import import_service as import_service_module
+from services import risk_service as risk_service_module
+from tests import comparative_test_service as comparative_test_service_module
+from tests import test_helper_functions
 
 
 class TestRiskServiceFunctions(unittest.TestCase):

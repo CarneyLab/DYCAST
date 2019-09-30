@@ -2,9 +2,9 @@
 
 from alembic import context
 
-from application.models.models import DeclarativeBase
-from application.services import config_service
-from application.services import database_service
+from models.models import DeclarativeBase
+from services import config_service
+from services import database_service
 
 # Init Dycast config
 config_service.init_config()

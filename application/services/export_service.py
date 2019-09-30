@@ -2,11 +2,11 @@ import sys
 import os
 import logging
 from time import strftime
-from application.services import conversion_service
-from application.services import config_service
-from application.services import database_service
-from application.services import file_service
-from application.models.models import Risk
+from services import conversion_service
+from services import config_service
+from services import database_service
+from services import file_service
+from models.models import Risk
 
 
 CONFIG = config_service.get_config()

@@ -4,12 +4,12 @@ import sys
 
 import configargparse
 
-from application.models.classes import dycast_parameters
-from application.services import config_service
-from application.services import conversion_service
-from application.services import database_service
-from application.services import debug_service
-from application.services import logging_service
+from models.classes import dycast_parameters
+from services import config_service
+from services import conversion_service
+from services import database_service
+from services import debug_service
+from services import logging_service
 
 debug_service.enable_debugger()
 

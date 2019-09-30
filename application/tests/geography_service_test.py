@@ -1,8 +1,8 @@
 import unittest
 
-from application.services import geography_service
-from application.models.classes import dycast_parameters
-from application.tests import test_helper_functions
+from services import geography_service
+from models.classes import dycast_parameters
+from tests import test_helper_functions
 
 
 class TestGeographyServiceFunctions(unittest.TestCase):

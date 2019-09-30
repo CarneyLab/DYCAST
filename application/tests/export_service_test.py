@@ -1,11 +1,11 @@
 import unittest
 import os
-from application.services import export_service as export_service_module
-from application.services import database_service
-from application.services import conversion_service
-from application.tests import test_helper_functions
-from application.models.classes import dycast_parameters
-from application.models.enums import enums
+from services import export_service as export_service_module
+from services import database_service
+from services import conversion_service
+from tests import test_helper_functions
+from models.classes import dycast_parameters
+from models.enums import enums
 
 
 class TestImportServiceFunctions(unittest.TestCase):

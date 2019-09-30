@@ -4,13 +4,13 @@ import sys
 from sqlalchemy import exists
 from sqlalchemy.exc import SQLAlchemyError
 
-from application.services import config_service
-from application.services import file_service
-from application.services import database_service
-from application.services import geography_service
+from services import config_service
+from services import file_service
+from services import database_service
+from services import geography_service
 
-from application.models.models import Case
-from application.models.enums import enums
+from models.models import Case
+from models.enums import enums
 
 
 CONFIG = config_service.get_config()

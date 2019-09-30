@@ -2,7 +2,7 @@ import unittest
 import os
 import configparser
 
-from application.services import config_service
+from services import config_service
 
 class TestConfigServiceFunctions(unittest.TestCase):
     def test_get_env_variable(self):

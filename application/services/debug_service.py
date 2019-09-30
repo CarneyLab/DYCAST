@@ -1,7 +1,7 @@
 import os
 import logging
 import time
-from application.services import config_service
+from services import config_service
 
 
 def enable_debugger():

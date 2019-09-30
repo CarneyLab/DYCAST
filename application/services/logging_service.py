@@ -1,7 +1,7 @@
 import os
 import logging
 import ast
-from application.services import config_service
+from services import config_service
 
 
 CONFIG = config_service.get_config()

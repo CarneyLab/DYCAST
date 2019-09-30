@@ -12,7 +12,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import database_exists, create_database, drop_database
 
-from application.services import config_service
+from services import config_service
 
 CONFIG = config_service.get_config()
 DeclarativeBase = declarative_base()

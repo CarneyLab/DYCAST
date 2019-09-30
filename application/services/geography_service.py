@@ -6,7 +6,7 @@ from geoalchemy2.functions import ST_Transform
 from geoalchemy2.elements import WKTElement
 from geoalchemy2.shape import to_shape
 
-from application.services import config_service
+from services import config_service
 
 
 CONFIG = config_service.get_config()

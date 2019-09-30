@@ -2,13 +2,13 @@ import unittest
 
 from sqlalchemy.exc import DataError
 
-from application.services import import_service as import_service_module
-from application.services import database_service
-from application.tests import test_helper_functions
+from services import import_service as import_service_module
+from services import database_service
+from tests import test_helper_functions
 
-from application.models.models import Case
-from application.models.classes import dycast_parameters
-from application.models.enums import enums
+from models.models import Case
+from models.classes import dycast_parameters
+from models.enums import enums
 
 
 class TestImportServiceFunctions(unittest.TestCase):

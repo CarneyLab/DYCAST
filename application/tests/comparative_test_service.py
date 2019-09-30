@@ -4,9 +4,9 @@ from sqlalchemy import bindparam, func
 from sqlalchemy.ext import baked
 from sqlalchemy.sql.expression import literal
 
-from application.models.models import Case, DistributionMargin
-from application.services import config_service
-from application.services import database_service
+from models.models import Case, DistributionMargin
+from services import config_service
+from services import database_service
 
 CONFIG = config_service.get_config()
 bakery = baked.bakery()

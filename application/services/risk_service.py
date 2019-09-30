@@ -7,12 +7,12 @@ from sqlalchemy.dialects.postgresql import array
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from sqlalchemy.sql.expression import literal
 
-from application.models.classes.cluster import Cluster
-from application.models.models import Case, DistributionMargin, Risk
-from application.services import config_service
-from application.services import database_service
-from application.services import geography_service
-from application.services import logging_service
+from models.classes.cluster import Cluster
+from models.models import Case, DistributionMargin, Risk
+from services import config_service
+from services import database_service
+from services import geography_service
+from services import logging_service
 
 CONFIG = config_service.get_config()
 

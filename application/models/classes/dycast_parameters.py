@@ -5,9 +5,9 @@
 
 import logging
 
-from application.services import import_service as import_service_module
-from application.services import export_service as export_service_module
-from application.services import risk_service as risk_service_module
+from services import import_service as import_service_module
+from services import export_service as export_service_module
+from services import risk_service as risk_service_module
 
 
 class DycastParameters(object):

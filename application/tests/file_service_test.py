@@ -1,9 +1,9 @@
 import unittest
 
-from application.services import file_service
-from application.tests import test_helper_functions
+from services import file_service
+from tests import test_helper_functions
 
-from application.models.classes import dycast_parameters
+from models.classes import dycast_parameters
 
 
 class TestFileServiceFunctions(unittest.TestCase):
