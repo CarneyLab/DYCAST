@@ -276,9 +276,9 @@ def run_migrations(**kwargs):
     database_service.run_migrations(revision)
 
 
-def main():
+def main(raw_args=None):
     parser = create_parser()
-    args = parser.parse_args()
+    args = parser.parse_args(raw_args)
 
     dictionary_args = vars(args)
 
