@@ -61,5 +61,5 @@ def get_log_level():
 
 def get_log_file_path():
     log_dir = CONFIG.get("system", "logfile")
-    root_dir = config_service.get_root_directory()
+    root_dir = config_service.get_application_directory()
     return os.path.join(root_dir, log_dir)

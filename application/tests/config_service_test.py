@@ -27,7 +27,7 @@ class TestConfigServiceFunctions(unittest.TestCase):
         config = config_service.get_config()
         self.assertIsNotNone(config)
 
-        expected_value = "application/dycast_log.txt"
+        expected_value = "dycast_log.txt"
         actual_value = config.get("system", "logfile")
         self.assertIsNotNone(actual_value)
         self.assertEqual(actual_value, expected_value)
