@@ -31,8 +31,7 @@ class ImportService(object):
                 self.load_case_file(dycast_parameters, filepath)
             except Exception:
                 logging.exception("Could not load file: %s", filepath)
-                sys.exit(1)
-
+                raise
 
     def load_case_file(self, dycast_parameters, filename):
         session = database_service.get_sqlalchemy_session()
@@ -47,7 +46,7 @@ class ImportService(object):
             input_file = file_service.read_file(filename)
         except Exception:
             logging.exception("Could not read file: %s", filename)
-            sys.exit(1)
+            raise
 
         for line_number, line in enumerate(input_file):
             line = remove_trailing_newline(line)
@@ -58,8 +57,7 @@ class ImportService(object):
                 elif header_count == 3:
                     location_type = enums.Location_type.GEOMETRY
                 else:
-                    logging.error("Incorrect column count: %s, exiting...", header_count)
-                    sys.exit(1)
+                    raise ValueError("Incorrect column count: {header_count}, exiting...".format(header_count=header_count))
                 logging.info("Loading cases as location type: %s", enums.Location_type(location_type).name)
             else:
                 lines_read += 1
@@ -95,8 +93,7 @@ class ImportService(object):
     def load_case(self, session, dycast_parameters, line, location_type):
 
         if location_type not in (enums.Location_type.LAT_LONG, enums.Location_type.GEOMETRY):
-            logging.error("Wrong value for 'location_type', exiting...")
-            sys.exit(1)
+            raise ValueError("Wrong value for 'location_type', exiting...")
 
         case = Case()
 
@@ -107,8 +104,8 @@ class ImportService(object):
                     "Parameter 'user_coordinate_system' cannot be undefined when loading cases with lat/long locations")
             try:
                 (case_id, report_date, lon, lat) = line.split("\t")
-            except ValueError:
-                fail_on_incorrect_count(location_type, line)
+            except ValueError as e:
+                fail_on_incorrect_count(location_type, line, e)
 
             point = geography_service.get_point_from_lat_long(lat, lon, user_coordinate_system)
             projected_point = geography_service.transform_point(point, self.system_coordinate_system)
@@ -118,8 +115,8 @@ class ImportService(object):
         else:
             try:
                 (case_id, report_date, geometry) = line.split("\t")
-            except ValueError:
-                fail_on_incorrect_count(location_type, line)
+            except ValueError as e:
+                fail_on_incorrect_count(location_type, line, e)
 
             case = Case(id=case_id, report_date=report_date, location=geometry)
 
@@ -134,11 +131,11 @@ class ImportService(object):
 
 
 
-def fail_on_incorrect_count(location_type, line):
+def fail_on_incorrect_count(location_type, line, exception):
     logging.error("Incorrect number of fields for 'location_type': %s",
                   enums.Location_type(location_type).name)
     logging.error(line.rstrip())
-    sys.exit(1)
+    raise exception
 
 def remove_trailing_newline(line):
     return line.strip()
