@@ -2,6 +2,7 @@ import sys
 import os
 import configparser
 import logging
+import traceback
 
 CONFIG = configparser.SafeConfigParser(os.environ)
 
@@ -18,12 +19,17 @@ def init_config(config_file_path=None):
         try:
             if not config_file_path or config_file_path == "":
                 config_file_path = get_default_config_file_path()
-            logging.debug("Reading config file: %s", config_file_path)
+            elif not os.path.isabs(config_file_path):
+                config_file_path = get_absolute_path_from_relative(config_file_path)
+            
+            message = "Reading config file: {config_file_path}".format(config_file_path=config_file_path)
+            log_before_config_is_initialized(message)
             CONFIG.read(config_file_path)
             logging.debug("Done reading config file.")
-        except Exception:
-            logging.exception("Could not read config file: %s", config_file_path)
-            sys.exit()
+        except Exception as e:
+            traceback.print_exc(file=sys.stdout)
+            log_before_config_is_initialized("Could not read config file:{config_file_path}".format(config_file_path=config_file_path))
+            log_before_config_is_initialized(str(e))
     else:
         logging.debug("Config already initialized, skipping")
 
@@ -60,3 +66,14 @@ def get_alembic_config_path():
     config_file_name = 'alembic.ini'
     application_directory = get_application_directory()
     return os.path.join(application_directory, 'init', 'migrations', config_file_name)
+
+def log_before_config_is_initialized(message):
+    logging.debug(message)
+    print(message)
+
+def get_absolute_path_from_relative(relative_path):
+    application_directory = get_application_directory()
+    relative_dir = os.path.dirname(relative_path)
+    relative_file = os.path.basename(relative_path)
+
+    return os.path.join(application_directory, relative_dir, relative_file)
