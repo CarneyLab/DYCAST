@@ -4,6 +4,9 @@ import sys
 
 import configargparse
 
+from util.custom_excepthook import custom_excepthook
+sys.excepthook = custom_excepthook
+
 from models.classes import dycast_parameters
 from services import config_service
 from services import conversion_service
