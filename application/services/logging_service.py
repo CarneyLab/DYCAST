@@ -1,3 +1,4 @@
+import sys
 import os
 import logging
 import ast
@@ -21,8 +22,15 @@ def init_logging():
     for handler in root_logger.handlers[:]:
         handler.setFormatter(log_formatter)
 
+    # Create new handler to log to stdout
+    stream_handler = logging.StreamHandler(sys.stdout)
+    stream_handler.setLevel(log_level)
+    stream_handler.setFormatter(log_formatter)
+    root_logger.addHandler(stream_handler)
+
     # Create new handler to log to a file
     file_handler = logging.FileHandler(get_log_file_path())
+    file_handler.setLevel(log_level)
     file_handler.setFormatter(log_formatter)
     root_logger.addHandler(file_handler)
 
