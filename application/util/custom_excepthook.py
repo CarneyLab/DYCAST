@@ -1,7 +1,7 @@
 import logging
 
-def custom_excepthook(exctype, value, tb):
+def custom_excepthook(exctype, value, traceback):
     logging.error("An uncaught exception occurred:")
-    logging.error("Type: {exctype}".format(exctype=exctype))
-    logging.error("Value: {value}".format(value=value))
-    logging.error("Traceback: {tb}".format(tb=tb))
+    logging.error("Type: %s", exctype)
+    logging.error("Value: %s", value)
+    logging.error("Traceback: %s", traceback)
