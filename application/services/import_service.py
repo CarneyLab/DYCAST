@@ -48,31 +48,34 @@ class ImportService(object):
             logging.exception("Could not read file: %s", filename)
             raise
 
-        for line_number, line in enumerate(input_file):
-            line = remove_trailing_newline(line)
-            if line_number == 0:
-                header_count = line.count("\t") + 1
-                if header_count == 4:
-                    location_type = enums.Location_type.LAT_LONG
-                elif header_count == 3:
-                    location_type = enums.Location_type.GEOMETRY
+        try:
+            for line_number, line in enumerate(input_file):
+                line = remove_trailing_newline(line)
+                if line_number == 0:
+                    header_count = line.count("\t") + 1
+                    if header_count == 4:
+                        location_type = enums.Location_type.LAT_LONG
+                    elif header_count == 3:
+                        location_type = enums.Location_type.GEOMETRY
+                    else:
+                        raise ValueError("Incorrect column count: {header_count}, exiting...".format(header_count=header_count))
+                    logging.info("Loading cases as location type: %s", enums.Location_type(location_type).name)
                 else:
-                    raise ValueError("Incorrect column count: {header_count}, exiting...".format(header_count=header_count))
-                logging.info("Loading cases as location type: %s", enums.Location_type(location_type).name)
-            else:
-                lines_read += 1
-                result = 0
-                try:
-                    result = self.load_case(session, dycast_parameters, line, location_type)
-                except Exception:
-                    raise
+                    lines_read += 1
+                    result = 0
+                    try:
+                        result = self.load_case(session, dycast_parameters, line, location_type)
+                    except Exception:
+                        raise
 
-                # If result is a case ID or -1 (meaning duplicate) then:
-                lines_processed += 1
-                if result == -1:
-                    lines_skipped += 1
-                else:
-                    lines_loaded += 1
+                    # If result is a case ID or -1 (meaning duplicate) then:
+                    lines_processed += 1
+                    if result == -1:
+                        lines_skipped += 1
+                    else:
+                        lines_loaded += 1
+        finally:
+            input_file.close()
 
         try:
             session.commit()
