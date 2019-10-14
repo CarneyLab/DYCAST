@@ -30,7 +30,6 @@ def valid_date(date_string):
         raise
 
 
-
 # Parsers
 def create_parser():
     # Common arguments for all subcommands
@@ -75,16 +74,16 @@ def create_parser():
 
     # Init database
     setup_dycast_parser = subparsers.add_parser('setup_dycast',
-                                              parents=[common_parser],
-                                              help='Initialize database',
-                                              argument_default=configargparse.SUPPRESS)
+                                                parents=[common_parser],
+                                                help='Initialize database',
+                                                argument_default=configargparse.SUPPRESS)
     setup_dycast_parser.set_defaults(func=setup_dycast)
 
     # Run database migrations
     run_migrations_parser = subparsers.add_parser('run_migrations',
-                                              parents=[common_parser],
-                                              help='Run database migrations',
-                                              argument_default=configargparse.SUPPRESS)
+                                                  parents=[common_parser],
+                                                  help='Run database migrations',
+                                                  argument_default=configargparse.SUPPRESS)
     run_migrations_parser.set_defaults(func=run_migrations)
 
     ## Common arguments:
@@ -192,19 +191,17 @@ def create_parser():
 
     ## Init db arguments:
     setup_dycast_parser.add('--force-db-init',
-                       action='store_true',
-                       help='If this flag is provided: drops existing database')
+                            action='store_true',
+                            help='If this flag is provided: drops existing database')
     setup_dycast_parser.add('--monte-carlo-file',
-                       env_var='MONTE_CARLO_FILE',
-                       required=True,
-                       help='File name without folder. File must be in `application/init` folder')
-
+                            env_var='MONTE_CARLO_FILE',
+                            required=True,
+                            help='File name without folder. File must be in `application/init` folder')
 
     ## Run migrations arguments:
     run_migrations_parser.add('--revision',
                               default='head',
                               help='Default: head (run all migrations that are not already applied)')
-
 
     return main_parser
 
