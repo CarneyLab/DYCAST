@@ -62,10 +62,13 @@ def get_default_config_file_path():
     application_directory = get_application_directory()
     return os.path.join(application_directory, config_file_name)
 
+def get_init_directory():
+    application_directory = get_application_directory()
+    return os.path.join(application_directory, 'init')
+
 def get_alembic_config_path():
     config_file_name = 'alembic.ini'
-    application_directory = get_application_directory()
-    return os.path.join(application_directory, 'init', 'migrations', config_file_name)
+    return os.path.join(get_init_directory(), 'migrations', config_file_name)
 
 def log_before_config_is_initialized(message):
     logging.debug(message)
