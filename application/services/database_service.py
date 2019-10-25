@@ -1,4 +1,5 @@
 import os
+import time
 import logging
 
 import psycopg2
@@ -108,7 +109,7 @@ def import_monte_carlo(monte_carlo_file):
 
     monte_carlo_file = parse_monte_carlo_path(monte_carlo_file)
     input_file = open(monte_carlo_file, 'r')
-    
+
     try:
         cur.copy_from(input_file, 'distribution_margins', sep=',')
         conn.commit()
