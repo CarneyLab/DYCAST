@@ -1,6 +1,5 @@
+import os
 import logging
-import sys
-import time
 
 import psycopg2
 from alembic import command
@@ -106,13 +105,22 @@ def create_postgis_extension(engine):
 def import_monte_carlo(monte_carlo_file):
     logging.info("Importing Monte Carlo file: %s", monte_carlo_file)
     cur, conn = init_psycopg_db()
-    input_file = open(r'/dycast/application/init/{0}'.format(monte_carlo_file), 'r')
+
+    monte_carlo_file = parse_monte_carlo_path(monte_carlo_file)
+    input_file = open(monte_carlo_file, 'r')
+    
     try:
         cur.copy_from(input_file, 'distribution_margins', sep=',')
         conn.commit()
     finally:
         input_file.close()
         conn.close()
+
+def parse_monte_carlo_path(monte_carlo_file):
+    if not os.path.isabs(monte_carlo_file):
+        init_directory = config_service.get_init_directory()
+        monte_carlo_file = os.path.join(init_directory, monte_carlo_file)
+    return monte_carlo_file
 
 
 # Migrations
