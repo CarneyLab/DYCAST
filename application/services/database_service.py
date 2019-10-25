@@ -105,14 +105,14 @@ def create_postgis_extension(engine):
 
 def import_monte_carlo(monte_carlo_file):
     logging.info("Importing Monte Carlo file: %s", monte_carlo_file)
-    input_file = open(r'/dycast/application/init/{0}'.format(monte_carlo_file), 'r')
     cur, conn = init_psycopg_db()
-
-    cur.copy_from(input_file, 'distribution_margins', sep=',')
-    input_file.close()
-    conn.commit()
-    conn.close()
-
+    input_file = open(r'/dycast/application/init/{0}'.format(monte_carlo_file), 'r')
+    try:
+        cur.copy_from(input_file, 'distribution_margins', sep=',')
+        conn.commit()
+    finally:
+        input_file.close()
+        conn.close()
 
 
 # Migrations
@@ -134,21 +134,24 @@ def init_db(monte_carlo_file, force=False):
     engine = db_connect()
     db_url = engine.url
 
-    if force:
-        if database_exists(db_url):
-            logging.info("Dropping existing database in 5 seconds...")
-            time.sleep(5)
-            drop_database(db_url)
-            logging.info("Dropped.")
+    try:
+        if force:
+            if database_exists(db_url):
+                logging.info("Dropping existing database in 5 seconds...")
+                time.sleep(5)
+                drop_database(db_url)
+                logging.info("Dropped.")
 
-    if not database_exists(db_url):
-        logging.info("Creating database...")
-        create_database(db_url)
-        create_postgis_extension(engine)
-        run_migrations()
-        import_monte_carlo(monte_carlo_file)
-    else:
-        logging.info("Database already exists, skipping database initialization...")
+        if not database_exists(db_url):
+            logging.info("Creating database...")
+            create_database(db_url)
+            create_postgis_extension(engine)
+            run_migrations()
+            import_monte_carlo(monte_carlo_file)
+        else:
+            logging.info("Database already exists, skipping database initialization...")
+    finally:
+        engine.dispose()
 
 
 # Query helper functions
