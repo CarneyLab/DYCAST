@@ -18,9 +18,8 @@ def init_logging():
     root_logger.setLevel(log_level)
     logging.basicConfig(level=log_level, format=log_format)
 
-    # Set formatter on existing handler
-    for handler in root_logger.handlers[:]:
-        handler.setFormatter(log_formatter)
+    # Clear existing handlers
+    root_logger.handlers.clear()
 
     # Create new handler to log to stdout
     stream_handler = logging.StreamHandler(sys.stdout)
