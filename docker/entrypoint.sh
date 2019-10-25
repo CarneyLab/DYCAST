@@ -370,7 +370,7 @@ case ${command} in
 		export_risk ${arguments}
 	;;
 	setup_dycast)
-		prepare_launch
+		wait_for_db
 		setup_dycast ${arguments}
 	;;
 	run_migrations)
