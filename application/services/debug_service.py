@@ -8,10 +8,9 @@ def enable_debugger():
     if config_service.get_env_variable("REMOTE_DEBUG") == "True":
         logging.info("REMOTE_DEBUG == True  --> Attaching to remote debugger...")
         import ptvsd
-        secret = config_service.get_env_variable("REMOTE_DEBUG_SECRET")
         
         try:
-            ptvsd.enable_attach(secret=secret, address=('0.0.0.0', 3000))
+            ptvsd.enable_attach(address=('0.0.0.0', 3000))
             logging.info("Debugger is ready for attachment.")
         except:
             pass
