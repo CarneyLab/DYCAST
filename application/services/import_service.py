@@ -19,7 +19,7 @@ CONFIG = config_service.get_config()
 class ImportService(object):
 
     def __init__(self, **kwargs):
-        self.system_coordinate_system = CONFIG.get("dycast", "system_coordinate_system")
+        self.system_srid = CONFIG.get("dycast", "system-srid")
 
 
     def load_case_files(self, dycast_parameters):
@@ -111,7 +111,7 @@ class ImportService(object):
                 fail_on_incorrect_count(location_type, line, e)
 
             point = geography_service.get_point_from_lat_long(lat, lon, user_coordinate_system)
-            projected_point = geography_service.transform_point(point, self.system_coordinate_system)
+            projected_point = geography_service.transform_point(point, self.system_srid)
 
             case = Case(id=case_id, report_date=report_date, location=projected_point)
 

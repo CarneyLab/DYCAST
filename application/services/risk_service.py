@@ -20,8 +20,8 @@ CONFIG = config_service.get_config()
 class RiskService(object):
 
     def __init__(self, dycast_parameters):
-        self.system_coordinate_system = CONFIG.get(
-            "dycast", "system_coordinate_system")
+        self.system_srid = CONFIG.get(
+            "dycast", "system-srid")
         self.dycast_parameters = dycast_parameters
 
     def generate_risk(self):

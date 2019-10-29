@@ -22,8 +22,8 @@ bakery = baked.bakery()
 class RiskService(object):
 
     def __init__(self, dycast_parameters):
-        self.system_coordinate_system = CONFIG.get(
-            "dycast", "system_coordinate_system")
+        self.system_srid = CONFIG.get(
+            "dycast", "system-srid")
         self.dycast_parameters = dycast_parameters
 
 
@@ -232,7 +232,7 @@ class RiskService(object):
 
 
     def get_cases_in_cluster_query(self, daily_cases_query, point):
-        # wkt_point = geography_service.get_point_from_lat_long(point.y, point.x, self.system_coordinate_system)
+        # wkt_point = geography_service.get_point_from_lat_long(point.y, point.x, self.system_srid)
         return daily_cases_query.filter(func.ST_DWithin(Case.location, point, self.dycast_parameters.spatial_domain))
 
 
