@@ -16,8 +16,6 @@ from services import logging_service
 
 debug_service.enable_debugger()
 
-CONFIG = config_service.get_config()
-
 
 # Types
 def valid_date(date_string):
@@ -32,56 +30,47 @@ def valid_date(date_string):
 
 # Parsers
 def create_parser():
-    # Common arguments for all subcommands
-    common_parser = configargparse.ArgParser(add_help=False)
-
-    common_parser.add('--config', '-c',
-                      default="./dycast.config",
-                      help="Override default config file")
-
-    # Main parser that keeps all subcommand separate, while still using common arguments from the common_parser
-    main_parser = configargparse.ArgParser(add_help=True)
+    # Main parser that keeps all subcommand separate, while still using common arguments
+    config_file_path = config_service.get_default_config_file_path()
+    main_parser = configargparse.ArgParser(default_config_files=[config_file_path], add_help=True)
+    
     subparsers = main_parser.add_subparsers(
         title='Commands', help='Choose from the following commands:')
 
+    add_common_arguments(main_parser)
+
     # Load cases
     load_cases_parser = subparsers.add_parser('load_cases',
-                                              parents=[common_parser],
                                               help='Loads cases into Dycast from a specified file',
                                               argument_default=configargparse.SUPPRESS)
     load_cases_parser.set_defaults(func=import_cases)
 
     # Generate risk
     generate_risk_parser = subparsers.add_parser('generate_risk',
-                                                 parents=[common_parser],
                                                  help='Generates risk from the cases currently in the database',
                                                  argument_default=configargparse.SUPPRESS)
     generate_risk_parser.set_defaults(func=generate_risk)
 
     # Export cases
     export_risk_parser = subparsers.add_parser('export_risk',
-                                               parents=[common_parser],
                                                help='Exports risk currently in the database to --export_directory',
                                                argument_default=configargparse.SUPPRESS)
     export_risk_parser.set_defaults(func=export_risk)
 
     # Run Dycast (run all steps)
     run_dycast_parser = subparsers.add_parser('run_dycast',
-                                              parents=[common_parser],
                                               help='Loads any .tsv files in (--files | -f), generates risk and exports it to --export_directory',
                                               argument_default=configargparse.SUPPRESS)
     run_dycast_parser.set_defaults(func=run_dycast)
 
     # Init database
     setup_dycast_parser = subparsers.add_parser('setup_dycast',
-                                                parents=[common_parser],
                                                 help='Initialize database',
                                                 argument_default=configargparse.SUPPRESS)
     setup_dycast_parser.set_defaults(func=setup_dycast)
 
     # Run database migrations
     run_migrations_parser = subparsers.add_parser('run_migrations',
-                                                  parents=[common_parser],
                                                   help='Run database migrations',
                                                   argument_default=configargparse.SUPPRESS)
     run_migrations_parser.set_defaults(func=run_migrations)
@@ -94,9 +83,6 @@ def create_parser():
                       nargs='+',
                       env_var='FILES',
                       help='File path or paths (space separated) to load cases from. Supported format: .TSV')
-        subparser.add('--import-directory',
-                      env_var='IMPORT_DIRECTORY',
-                      help='Override default set in dycast.config. Path to load cases from. If no (--files | -f) is specified, Dycast will look in this directory for .tsv files to load into the database')
         subparser.add('--srid-cases',
                       env_var='SRID_CASES',
                       help='The SRID (projection) of the cases you are loading. Only required if your cases are in lat/long, not when they are in PostGIS geometry format')
@@ -161,9 +147,6 @@ def create_parser():
         # export_risk
         # run_dycast
     for subparser in [export_risk_parser, run_dycast_parser]:
-        subparser.add('--export-directory',
-                      env_var='EXPORT_DIRECTORY',
-                      help='Optional. Default is defined in dycast.config')
         subparser.add('--export-format',
                       env_var='EXPORT_FORMAT',
                       default='tsv',
@@ -196,7 +179,8 @@ def create_parser():
     setup_dycast_parser.add('--monte-carlo-file',
                             env_var='MONTE_CARLO_FILE',
                             required=True,
-                            help='File name without folder. File must be in `application/init` folder')
+                            help='File name with or without folder. If without folder name, file must be in the `application/init` folder')
+
 
     ## Run migrations arguments:
     run_migrations_parser.add('--revision',
@@ -204,6 +188,39 @@ def create_parser():
                               help='Default: head (run all migrations that are not already applied)')
 
     return main_parser
+
+def add_common_arguments(main_parser):
+    main_parser.add('--logfile', '-l',
+                    help="Optional: log file name. Default is defined in dycast.config")
+
+    main_parser.add('--import-directory', '-i',
+                    help="Optional: case import directory. Default is defined in dycast.config. Path to load cases from. If no (--files | -f) is specified, Dycast will look in this directory for .tsv files to load into the database")
+
+    main_parser.add('--export-directory', '-e',
+                    help="Optional: risk export directory. Default is defined in dycast.config.")
+
+    main_parser.add('--db-name',
+                    env_var='DBNAME',
+                    help='Override default database name from config file')
+
+    main_parser.add('--db-user',
+                    env_var='DBUSER',
+                    help='Override default database user from config file')
+
+    main_parser.add('--db-password',
+                    help='Override default database password from config file')
+
+    main_parser.add('--db-host',
+                    env_var='DBHOST',
+                    help='Override default database host from config file')
+
+    main_parser.add('--db-port',
+                    env_var='DBPORT',
+                    help='Override default database port from config file')
+
+    main_parser.add('--system-srid',
+                    env_var='SYSTEM_SRID',
+                    help='Override default system SRID from config file')
 
 
 ##########################################################################
@@ -279,10 +296,9 @@ def run_migrations(**kwargs):
 def main(raw_args=None):
     parser = create_parser()
     args = parser.parse_args(raw_args)
-
     dictionary_args = vars(args)
 
-    config_service.init_config(dictionary_args.get('config'))
+    config_service.init_config(dictionary_args)
     logging_service.init_logging()
 
     if args.func:

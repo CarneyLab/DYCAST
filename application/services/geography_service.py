@@ -22,7 +22,7 @@ def get_shape_from_literal_wkt(wkt):
 
 
 def get_wktelement_from_wkt(wkt):
-    return WKTElement(wkt, srid=CONFIG.get("dycast", "system_coordinate_system"))
+    return WKTElement(wkt, srid=CONFIG.get("system-srid"))
 
 
 def get_shape_from_sqlalch_element(element):
@@ -36,7 +36,7 @@ def transform_point(point, target_projection):
 def generate_grid(dycast_parameters):
     '''
     Returns a raster grid with points in the coordinate system as
-    specified in global setting 'system_coordinate_system'
+    specified in global setting 'system-srid'
     '''
 
     srid_of_extent = dycast_parameters.srid_of_extent
@@ -45,12 +45,12 @@ def generate_grid(dycast_parameters):
     extent_max_x = dycast_parameters.extent_max_x
     extent_max_y = dycast_parameters.extent_max_y
 
-    system_coordinate_system = CONFIG.get("dycast", "system_coordinate_system")
+    system_srid = CONFIG.get("system-srid")
 
     # Set up projections
     projection_user_defined = pyproj.Proj(init="epsg:%s" % srid_of_extent)
     projection_metric = pyproj.Proj(init='epsg:3857')  # metric; same as EPSG:900913
-    projection_system_default = pyproj.Proj(init="epsg:%s" % system_coordinate_system)
+    projection_system_default = pyproj.Proj(init="epsg:%s" % system_srid)
 
     # Create corners of rectangle to be transformed to a grid
     north_west = shapely.geometry.Point((extent_min_x, extent_min_y))
@@ -71,7 +71,7 @@ def generate_grid(dycast_parameters):
         y = start[1]
         while y > end[1]:
             new_x, new_y = pyproj.transform(projection_metric, projection_system_default, x, y)
-            point = get_point_from_lat_long(new_y, new_x, system_coordinate_system)
+            point = get_point_from_lat_long(new_y, new_x, system_srid)
             gridpoints.append(point)
             y -= stepsize
         x += stepsize

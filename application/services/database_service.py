@@ -21,22 +21,22 @@ DeclarativeBase = declarative_base()
 # Helper functions common
 
 def get_db_instance_name():
-    return CONFIG.get("database", "db_instance_name")
+    return CONFIG.get("db-name")
 
 def get_db_user():
-    return CONFIG.get("database", "user")
+    return CONFIG.get("db-user")
 
 
 def get_db_password():
-    return CONFIG.get("database", "password")
+    return CONFIG.get("db-password")
 
 
 def get_db_host():
-    return CONFIG.get("database", "host")
+    return CONFIG.get("db-host")
 
 
 def get_db_port():
-    return CONFIG.get("database", "port")
+    return CONFIG.get("db-port")
 
 
 
