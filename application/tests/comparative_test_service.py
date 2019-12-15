@@ -21,7 +21,8 @@ class ComparativeTestService(object):
     """
 
     def __init__(self, dycast_parameters):
-        self.system_srid = CONFIG.get("system-srid")
+        self.system_srid = CONFIG.get(
+            "dycast", "system_srid")
         self.dycast_parameters = dycast_parameters
 
     def get_close_space_and_time_query(self, session):

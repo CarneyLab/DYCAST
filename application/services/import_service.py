@@ -19,7 +19,7 @@ CONFIG = config_service.get_config()
 class ImportService(object):
 
     def __init__(self, **kwargs):
-        self.system_srid = CONFIG.get("system-srid")
+        self.system_srid = CONFIG.get("dycast", "system_srid")
 
 
     def load_case_files(self, dycast_parameters):
