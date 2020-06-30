@@ -22,7 +22,7 @@ def get_shape_from_literal_wkt(wkt):
 
 
 def get_wktelement_from_wkt(wkt):
-    return WKTElement(wkt, srid=CONFIG.get("system-srid"))
+    return WKTElement(wkt, srid=CONFIG.get("system_srid"))
 
 
 def get_shape_from_sqlalch_element(element):
@@ -45,7 +45,7 @@ def generate_grid(dycast_parameters):
     extent_max_x = dycast_parameters.extent_max_x
     extent_max_y = dycast_parameters.extent_max_y
 
-    system_srid = CONFIG.get("system-srid")
+    system_srid = CONFIG.get("system_srid")
 
     # Set up projections
     projection_user_defined = pyproj.Proj(init="epsg:%s" % srid_of_extent)

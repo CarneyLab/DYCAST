@@ -21,23 +21,19 @@ DeclarativeBase = declarative_base()
 # Helper functions common
 
 def get_db_instance_name():
-    return CONFIG.get("db-name")
+    return CONFIG.get("db_name")
 
 def get_db_user():
-    return CONFIG.get("db-user")
-
+    return CONFIG.get("db_user")
 
 def get_db_password():
-    return CONFIG.get("db-password")
-
+    return CONFIG.get("db_password")
 
 def get_db_host():
-    return CONFIG.get("db-host")
-
+    return CONFIG.get("db_host")
 
 def get_db_port():
-    return CONFIG.get("db-port")
-
+    return CONFIG.get("db_port")
 
 
 # Helper functions SQLAlchemy

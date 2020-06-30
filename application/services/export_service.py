@@ -31,7 +31,7 @@ class ExportService(object):
             separator = self.get_separator(export_format)
 
         if export_directory is None:
-            export_directory = CONFIG.get("export-directory")
+            export_directory = CONFIG.get("export_directory")
 
         # dates are objects, not strings
         startdate_string = conversion_service.get_string_from_date_object(startdate)
