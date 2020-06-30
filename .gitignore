@@ -9,3 +9,4 @@ application/output/
 .vs/
 venv/
 application/.coverage
+application/logfile
