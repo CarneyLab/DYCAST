@@ -75,6 +75,12 @@ def create_parser():
                                                   argument_default=configargparse.SUPPRESS)
     run_migrations_parser.set_defaults(func=run_migrations)
 
+    # Run database migrations
+    create_migration_parser = subparsers.add_parser('create_migration',
+                                                  help='Create database migration',
+                                                  argument_default=configargparse.SUPPRESS)
+    create_migration_parser.set_defaults(func=create_migration)
+
     ## Common arguments:
         # load_cases
         # run_dycast
@@ -291,6 +297,10 @@ def setup_dycast(**kwargs):
 def run_migrations(**kwargs):
     revision = kwargs.get('revision')
     database_service.run_migrations(revision)
+
+
+def create_migration(**kwargs):
+    database_service.create_migration()
 
 
 def main(raw_args=None):

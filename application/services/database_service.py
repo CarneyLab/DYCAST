@@ -124,14 +124,21 @@ def parse_monte_carlo_path(monte_carlo_file):
 
 def run_migrations(revision='head'):
     logging.info("Running database migrations...")
-    alembic_config_path = config_service.get_alembic_config_path()
-    alembic_config = Config(alembic_config_path)
     try:
-        command.upgrade(config=alembic_config, revision=revision)
+        command.upgrade(config=get_alembig_config(), revision=revision)
     except CommandError as ex:
         logging.error("Could not run migrations: [{0}]".format(ex))
 
+def create_migration():
+    logging.info("Creating database migration...")
+    try:
+        command.revision(config=get_alembig_config(), autogenerate=True)
+    except CommandError as ex:
+        logging.error("Could not create migration: [{0}]".format(ex))
 
+def get_alembig_config():
+    alembic_config_path = config_service.get_alembic_config_path()
+    return Config(alembic_config_path)
 
 # Init command
 

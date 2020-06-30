@@ -269,12 +269,27 @@ setup_dycast() {
 
 run_migrations() {
 	local arguments="$@"
-	echo "Running database migrations using arguments: ${arguments}..."
+	echo "Running database migrations using arguments: ${arguments}"
 	python ${DYCAST_APP_PATH}/dycast.py run_migrations ${arguments}
 
 	exit_code=$?
 	if [[ ! "${exit_code}" == "0" ]]; then
 		echo "Command 'run_migrations' failed, exiting..."
+		exit ${exit_code}
+	else
+		echo "Done running database migrations"
+	fi
+}
+
+
+create_migration() {
+	local arguments="$@"
+	echo "Creating database migration using arguments: ${arguments}"
+	python ${DYCAST_APP_PATH}/dycast.py create_migration ${arguments}
+
+	exit_code=$?
+	if [[ ! "${exit_code}" == "0" ]]; then
+		echo "Command 'create_migration' failed, exiting..."
 		exit ${exit_code}
 	else
 		echo "Done running database migrations"
@@ -376,6 +391,10 @@ case ${command} in
 	run_migrations)
 	    prepare_launch
 	    run_migrations ${arguments}
+	;;
+	create_migration)
+	    prepare_launch
+	    create_migration ${arguments}
 	;;
 	### From here list only commands that are specific for this Docker entrypoint
 	run_tests)
