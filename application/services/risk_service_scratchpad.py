@@ -58,7 +58,8 @@ class RiskService(object):
                         risk = Risk(risk_date=day,
                                     number_of_cases=vector_count,
                                     lat=point.x,
-                                    long=point.y)
+                                    long=point.y,
+                                    location=point)
 
 
                 for point in gridpoints:

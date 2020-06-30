@@ -50,10 +50,13 @@ class RiskService(object):
                     self.get_close_space_and_time_for_cluster(cluster)
                     self.get_cumulative_probability_for_cluster(session, cluster)
 
+                    point = geography_service.get_point_from_lat_long(cluster.point.y, cluster.point.x, self.system_srid)
+
                     risk = Risk(risk_date=day,
                                 number_of_cases=vector_count,
                                 lat=cluster.point.y,
                                 long=cluster.point.x,
+                                location=point,
                                 close_pairs=cluster.close_space_and_time,
                                 close_space=cluster.close_in_space,
                                 close_time=cluster.close_in_time,
