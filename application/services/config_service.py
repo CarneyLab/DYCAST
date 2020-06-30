@@ -14,7 +14,8 @@ def get_env_variable(var_name):
         return None
 
 
-def init_config(dictionary_args):
+def init_config(dictionary_args=None):
+    log_before_config_is_initialized("Initializing config...")
     global CONFIG
     CONFIG.update(dictionary_args)
 

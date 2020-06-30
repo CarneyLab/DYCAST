@@ -1,4 +1,4 @@
-
+import logging
 
 from alembic import context
 
@@ -28,6 +28,8 @@ def run_migrations_offline():
     script output.
 
     """
+    logging.info("Running migrations offline")
+
     url = database_service.get_sqlalchemy_conn_string()
     context.configure(
         url=url, target_metadata=target_metadata, literal_binds=True)
@@ -43,6 +45,8 @@ def run_migrations_online():
     and associate a connection with the context.
 
     """
+    logging.info("Running migrations online")
+    
     connectable = database_service.db_connect()
 
     with connectable.connect() as connection:
