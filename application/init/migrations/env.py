@@ -6,9 +6,6 @@ from models.models import DeclarativeBase
 from services import config_service
 from services import database_service
 
-# Init Dycast config
-config_service.init_config()
-
 # add your model's MetaData object here
 # for 'autogenerate' support
 # from myapp import mymodel
