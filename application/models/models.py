@@ -45,6 +45,7 @@ class Risk(DeclarativeBase):
     risk_date = Column(Date, primary_key=True)
     lat = Column(Float, primary_key=True)
     long = Column(Float, primary_key=True)
+    location = Column(Geometry(geometry_type='POINT', srid='3857'))
     number_of_cases = Column(Integer)
     close_pairs = Column(Integer)
     close_space = Column(Integer)
