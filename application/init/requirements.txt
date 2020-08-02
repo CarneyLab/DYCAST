@@ -9,7 +9,7 @@ boto3==1.9.233
 rfc3986>=0.3.1
 configargparse==0.15.1
 enum34==1.1.6
-SQLAlchemy==1.3.18
-sqlalchemy-utils==0.36.8
+sqlalchemy==1.2.1
+sqlalchemy-utils==0.32.21
 geoalchemy2==0.4.2
 alembic==1.0.0
