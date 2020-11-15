@@ -1,0 +1,3 @@
+coverage==4.5.4
+ptvsd==4.3.2
+nose==1.3.7
