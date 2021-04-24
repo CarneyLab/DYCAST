@@ -10,3 +10,4 @@ application/output/
 venv/
 application/.coverage
 application/logfile
+nosetests.xml
