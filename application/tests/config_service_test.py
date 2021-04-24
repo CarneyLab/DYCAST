@@ -1,6 +1,5 @@
 import unittest
 import os
-import configparser
 
 from services import config_service
 
