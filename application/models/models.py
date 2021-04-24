@@ -31,6 +31,14 @@ class DistributionMargin(DeclarativeBase):
     """SQLAlchemy Distribution Margins model (Monte Carlo)"""
     __tablename__ = "distribution_margins"
 
+    def __init__(self, number_of_cases: int, close_in_space_and_time: int, probability: int, cumulative_probability: float, close_space: int, close_time: int):
+        self.number_of_cases = number_of_cases
+        self.close_in_space_and_time = close_in_space_and_time
+        self.probability = probability
+        self.cumulative_probability = cumulative_probability
+        self.close_space = close_space
+        self.close_time = close_time
+
     number_of_cases = Column(Integer, primary_key=True, index=True)
     close_in_space_and_time = Column(Integer, primary_key=True, index=True)
     probability = Column(Integer)
