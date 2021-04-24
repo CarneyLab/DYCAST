@@ -33,7 +33,7 @@ class DistributionMargin(DeclarativeBase):
 
     number_of_cases = Column(Integer, primary_key=True, index=True)
     close_in_space_and_time = Column(Integer, primary_key=True, index=True)
-    probability = Column(Float)
+    probability = Column(Integer)
     cumulative_probability = Column(Float)
     close_space = Column(Integer, primary_key=True, index=True)
     close_time = Column(Integer, primary_key=True, index=True)
