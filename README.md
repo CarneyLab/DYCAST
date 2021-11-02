@@ -6,7 +6,7 @@ The original version was written by Constandinos Theophilides at the [Center for
 
 Subsequently, the application was ported to [Python and PostGIS](https://github.com/almccon/DYCAST) by [Alan McConchie](https://github.com/almccon) for use in dengue modeling (Carney 2010).
 
-The current version below is a continuation of that Python application. The aim is to update, streamline, and expand this application so that it supports the prediction of Zika virus. Alternatively, a **DYCAST plugin for QGIS** can be found [here](https://github.com/CarneyLab/DYCAST-web), and a browser-based map interface can be found [here](https://github.com/CarneyLab/DYCAST-web). 
+The current version below is a continuation of that Python application. The aim is to update, streamline, and expand this application so that it supports the prediction of Zika virus. Alternatively, a **DYCAST plugin for QGIS** can be found [here](https://github.com/CarneyLab/DYCAST-QGIS), and a browser-based map interface can be found [here](https://github.com/CarneyLab/DYCAST-web). 
 
 More information: https://www.DYCAST.org  
 
