@@ -6,7 +6,7 @@ The original version was written by Constandinos Theophilides at the [Center for
 
 Subsequently, the application was ported to [Python and PostGIS](https://github.com/almccon/DYCAST) by [Alan McConchie](https://github.com/almccon) for use in dengue modeling (Carney 2010).
 
-The current version is a continuation of that Python application. The aim is to update, streamline, and expand this application so that it supports the prediction of Zika virus. In addition, a browser-based map interface is being built [here](https://github.com/veuncent/dycast-web). 
+The current version below is a continuation of that Python application. The aim is to update, streamline, and expand this application so that it supports the prediction of Zika virus. Alternatively, a **DYCAST plugin for QGIS** can be found [here](https://github.com/CarneyLab/DYCAST-web), and a browser-based map interface can be found [here](https://github.com/CarneyLab/DYCAST-web). 
 
 More information: https://www.DYCAST.org  
 
@@ -61,7 +61,7 @@ temporal: 28 days
 close space: 200 meters  
 close time: 4 days  
 
-**WNV (Carney 2011)**  
+**WNV (Carney et al 2011)**  
 spatial: 2,400 meters  
 temporal: 21 days  
 close space: 402 meters  
